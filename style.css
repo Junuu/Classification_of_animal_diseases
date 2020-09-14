@@ -41,7 +41,9 @@ body {
   display: none;
   text-align: center;
 }
-
+#loading {
+  display: none;
+}
 .file-upload-input {
   position: absolute;
   margin: 0;
@@ -158,3 +160,6 @@ body {
 		font-size : 2rem;
 	}
 }
+
+
+
