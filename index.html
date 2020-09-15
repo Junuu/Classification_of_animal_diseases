@@ -60,6 +60,20 @@
 			<h1 class="title">인공지능 질병 분석</h1>
 			<h2 class="subtitle">사진으로 질병 알아보기</h2>
 		</section>
+		<br />
+		<div class="d-flex justify-content-center">
+			<h4>이미지를 올리기전에 분석하고싶은 버튼을 눌러주세요!</h4>
+		</div>
+		<form name="image_type">
+			<!-- form을 통해 데이터를 주고 받을 수 있음-->
+			<div class="d-flex justify-content-center">
+				<input type="radio" name="check_img" value="귀" />귀&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="check_img" value="토" />토&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="check_img" value="변" />변&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="check_img" value="피부" />피부&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="check_img" value="눈" />눈&nbsp;&nbsp;&nbsp;
+			</div>
+		</form>
 
 		<script
 			class="jsbin"
@@ -78,15 +92,15 @@
 				</div>
 			</div>
 			<div class="file-upload-content">
-				<img class="file-upload-image" id="animal-image" src="#" alt="your image" />				
+				<img class="file-upload-image" id="animal-image" src="#" alt="your image" />
 				<div id="loading" class="animated bounce">
 					<div class="spinner-border" role="status">
 						<span class="sr-only">Loading...</span>
 					</div>
 					<p class="text-center">AI가 사진을 분석중입니다.</p>
 				</div>
-				<p class="result-message"></p>								
-				<div id="label-container"></div>				
+				<p class="result-message"></p>
+				<div id="label-container"></div>
 				<!-- Go to www.addthis.com/dashboard to customize your tools -->
 				<div class="addthis_inline_share_toolbox"></div>
 
@@ -123,8 +137,8 @@
 					var reader = new FileReader();
 
 					reader.onload = function (e) {
-						$('.result-message').html(""); 
-						$('#label-container').html("");
+						$('.result-message').html('');
+						$('#label-container').html('');
 						$('.image-upload-wrap').hide();
 						$('#loading').show();
 						$('.file-upload-image').attr('src', e.target.result);
@@ -133,8 +147,8 @@
 					};
 
 					reader.readAsDataURL(input.files[0]);
-					earsinit().then(() => {
-						earspredict();
+					init().then(() => {
+						predict();
 						$('#loading').hide();
 					}); // 일단은 귀모델 초기화 나중에 귀,토 등을 정하는 if문이 들어가야함
 				} else {
@@ -159,12 +173,28 @@
 			// https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
 			// the link to your model provided by Teachable Machine export panel
-			const URL = 'https://teachablemachine.withgoogle.com/models/DAXIQrikS/';
+			const earsURL = 'https://teachablemachine.withgoogle.com/models/DAXIQrikS/';
+			const vomitURL = 'https://teachablemachine.withgoogle.com/models/xDVo_8qmE/';
+			const shitURL = 'https://teachablemachine.withgoogle.com/models/DAXIQrikS/';
+			const skinURL = 'https://teachablemachine.withgoogle.com/models/DAXIQrikS/';
+			const eyesURL = 'https://teachablemachine.withgoogle.com/models/DAXIQrikS/';
 
-			let model, webcam, labelContainer, maxPredictions;
+			let model, labelContainer, maxPredictions;
 
 			// Load the image model and setup the webcam
-			async function earsinit() {
+			async function init() {
+				if (image_type.check_img.value == '귀') {
+					URL = earsURL;
+				} else if (image_type.check_img.value == '토') {
+					URL = vomitURL;
+				} else if (image_type.check_img.value == '변') {
+					URL = shitURL;
+				} else if (image_type.check_img.value == '피부') {
+					URL = skinURL;
+				} //image_type.check_img.value=="눈"
+				else {
+					URL = eyesURL;
+				}
 				const modelURL = URL + 'model.json';
 				const metadataURL = URL + 'metadata.json';
 
@@ -182,23 +212,74 @@
 			}
 
 			// run the webcam image through the image model
-			async function earspredict() {
+			async function predict() {
 				// predict can take in an image, video or canvas html element
 				var image = document.getElementById('animal-image');
 				const prediction = await model.predict(image, false);
 				prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+
 				var resultMessage;
-				if (prediction[0].className == '정상') {
-					resultMessage = '정상일 확률이 높습니다.';
-				} else if (prediction[0].className == '외이염') {
-					resultMessage = '외이염일 확률이 높습니다.';
-				} else {
-					resultMessage = '알수없음';
+
+				if (image_type.check_img.value == '귀') {
+					if (prediction[0].className == '정상') {
+						resultMessage = '정상일 확률이 높습니다.';
+					} else if (prediction[0].className == '외이염') {
+						resultMessage = '외이염일 확률이 높습니다.';
+					} else {
+						resultMessage = '알수없음';
+					}
+				} else if (image_type.check_img.value == '토') {
+					if (prediction[0].className == '갈색&검정색 토') {
+						resultMessage = '갈색&검정색 토일 확률이 높습니다.';
+					} else if (prediction[0].className == '노란색 토') {
+						resultMessage = '노란색 토일 확률이 높습니다.';
+					} else if (prediction[0].className == '초록색 토') {
+						resultMessage = '초록색 토일 확률이 높습니다.';
+					} else if (prediction[0].className == '빨간색 토') {
+						resultMessage = '빨간색 토일 확률이 높습니다.';
+					} else if (prediction[0].className == '사료토') {
+						resultMessage = '사료토일 확률이 높습니다.';
+					} else if (prediction[0].className == '투명색&거품토') {
+						resultMessage = '투명색&거품토일 확률이 높습니다.';
+					} else {
+						resultMessage = '알수없음';
+					}
+				} else if (image_type.check_img.value == '변') {
+					if (prediction[0].className == '정상') {
+						resultMessage = '정상일 확률이 높습니다.';
+					} else if (prediction[0].className == '외이염') {
+						resultMessage = '외이염일 확률이 높습니다.';
+					} else {
+						resultMessage = '알수없음';
+					}
+				} else if (image_type.check_img.value == '피부') {
+					if (prediction[0].className == '정상') {
+						resultMessage = '정상일 확률이 높습니다.';
+					} else if (prediction[0].className == '외이염') {
+						resultMessage = '외이염일 확률이 높습니다.';
+					} else {
+						resultMessage = '알수없음';
+					}
+				} //image_type.check_img.value=="눈"
+				else {
+					if (prediction[0].className == '정상') {
+						resultMessage = '정상일 확률이 높습니다.';
+					} else if (prediction[0].className == '외이염') {
+						resultMessage = '외이염일 확률이 높습니다.';
+					} else {
+						resultMessage = '알수없음';
+					}
+					console.log(image_type.check_img.value);
 				}
+				alert(image_type.check_img.value);
+
 				$('.result-message').html(resultMessage);
 				for (let i = 0; i < maxPredictions; i++) {
 					const classPrediction =
-						prediction[i].className + ': ' + prediction[i].probability.toFixed(2) * 100 + '%';
+						prediction[i].className +
+						': ' +
+						prediction[i].probability.toFixed(2) * 100 +
+						'%';
 					labelContainer.childNodes[i].innerHTML = classPrediction;
 				}
 			}
