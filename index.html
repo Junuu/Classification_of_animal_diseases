@@ -23,7 +23,7 @@
 
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light nav-distance">
-			<a class="navbar-brand" href="#">App Title</a>
+			<a class="navbar-brand" href="index.html">App Title</a>
 			<button
 				class="navbar-toggler"
 				type="button"
@@ -39,14 +39,16 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="index.html"
+							>Home <span class="sr-only">(current)</span></a
+						>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="information.html">반려동물지식</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">챗봇</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">반려동물지식</a>
-					</li>					
 				</ul>
 			</div>
 		</nav>
@@ -57,7 +59,34 @@
 		</section>
 		<br />
 		<div class="d-flex justify-content-center">
-			<h4>이미지를 올리기전에 분석하고싶은 버튼을 눌러주세요!</h4>
+			<h4>
+				<details>
+					<summary>사용하기 전 읽어주세요!</summary>
+						<p>
+							<br>
+							1.분석하고 싶은 사진 분야의 버튼을 눌러주세요.<br><br>
+							
+							>> 눈 사진의 질병을 분석하고 싶으시면 눈 버튼을 눌러주세요.<br><br>
+							
+							2. 결과를 너무 맹신하지 말아주세요.<br><br>
+							
+							>> 사진 분석 후 질병 알아보기를 통하여 자세한 질병 정보를 확인해주세요.<br><br>
+							
+							3.사진을 최대한 구체적으로 찍어주세요.<br><br>
+							
+							>> 귀를 선택하셨다면 귀만 찍어 주실수록 정확도가 높습니다.<br><br>
+							
+							>> 아래는 예시 사진들 입니다. 토,변 사진들도 있으니 보기 싫으신 분은 2번째 사진까지만 봐주세요.<br><br>
+							<img src="earsexample.jpg" alt="귀 예시 사진" width= 100% height = 20%><br>
+							<img src="eyesexample.PNG" alt="눈 예시 사진" width= 100% height = 20%><br>
+							<img src="shitexample.PNG" alt="변 예시 사진" width= 100% height = 20%><br>
+							<img src="vomitexample.jpg" alt="토 예시 사진" width= 100% height = 20%><br>
+							<img src="skinexample.jpg" alt="피부 예시 사진" width= 100% height = 20%><br><br>
+							
+							읽어주셔서 감사합니다.
+						</p>
+				</details>
+			</h4>
 		</div>
 		<form name="image_type">
 			<!-- form을 통해 데이터를 주고 받을 수 있음-->
@@ -78,7 +107,7 @@
 				>&nbsp;&nbsp;&nbsp;
 				<label class="box-radio-input"
 					><input type="radio" name="check_img" value="눈" /><span>눈</span></label
-				>&nbsp;&nbsp;&nbsp;				
+				>&nbsp;&nbsp;&nbsp;
 			</div>
 		</form>
 
@@ -235,7 +264,8 @@
 					} else {
 						resultMessage = '알수없음';
 					}
-					resultMessage = resultMessage + '';
+					resultMessage =
+						resultMessage + '<br><a href = information.html>질병 자세히 알아보기 </a>';
 				} else if (image_type.check_img.value == '토') {
 					if (prediction[0].className == '갈색&검정색 토') {
 						resultMessage = '갈색&검정색 토일 확률이 높습니다.';
@@ -252,6 +282,8 @@
 					} else {
 						resultMessage = '알수없음';
 					}
+					resultMessage =
+						resultMessage + '<br><a href = information.html>질병 자세히 알아보기 </a>';
 				} else if (image_type.check_img.value == '변') {
 					if (prediction[0].className == '정상') {
 						resultMessage = '정상일 확률이 높습니다.';
@@ -260,6 +292,8 @@
 					} else {
 						resultMessage = '알수없음';
 					}
+					resultMessage =
+						resultMessage + '<br><a href = information.html>질병 자세히 알아보기 </a>';
 				} else if (image_type.check_img.value == '피부') {
 					if (prediction[0].className == '정상') {
 						resultMessage = '정상일 확률이 높습니다.';
@@ -268,6 +302,8 @@
 					} else {
 						resultMessage = '알수없음';
 					}
+					resultMessage =
+						resultMessage + '<br><a href = information.html>질병 자세히 알아보기 </a>';
 				} //image_type.check_img.value=="눈"
 				else {
 					if (prediction[0].className == '정상') {
@@ -283,6 +319,8 @@
 					} else {
 						resultMessage = '알수없음';
 					}
+					resultMessage =
+						resultMessage + '<br><a href = information.html>질병 자세히 알아보기 </a>';
 				}
 
 				$('.result-message').html(resultMessage);
