@@ -177,7 +177,7 @@
 			const vomitURL = 'https://teachablemachine.withgoogle.com/models/xDVo_8qmE/';
 			const shitURL = 'https://teachablemachine.withgoogle.com/models/DAXIQrikS/';
 			const skinURL = 'https://teachablemachine.withgoogle.com/models/DAXIQrikS/';
-			const eyesURL = 'https://teachablemachine.withgoogle.com/models/DAXIQrikS/';
+			const eyesURL = 'https://teachablemachine.withgoogle.com/models/0jLtJuM_P/';
 
 			let model, labelContainer, maxPredictions;
 
@@ -228,6 +228,7 @@
 					} else {
 						resultMessage = '알수없음';
 					}
+					resultMessage = resultMessage + ''
 				} else if (image_type.check_img.value == '토') {
 					if (prediction[0].className == '갈색&검정색 토') {
 						resultMessage = '갈색&검정색 토일 확률이 높습니다.';
@@ -264,14 +265,19 @@
 				else {
 					if (prediction[0].className == '정상') {
 						resultMessage = '정상일 확률이 높습니다.';
-					} else if (prediction[0].className == '외이염') {
-						resultMessage = '외이염일 확률이 높습니다.';
+					} else if (prediction[0].className == '결막염&각막염') {
+						resultMessage = '결막염&각막염일 확률이 높습니다.';
+					} else if (prediction[0].className == '안검염&다래끼') {
+						resultMessage = '안검염&다래끼일 확률이 높습니다.';
+					} else if (prediction[0].className == '백내장&핵경화') {
+						resultMessage = '백내장&핵경화일 확률이 높습니다.';
+					} else if (prediction[0].className == '체리아이') {
+						resultMessage = '체리아이일 확률이 높습니다.';
 					} else {
 						resultMessage = '알수없음';
 					}
-					console.log(image_type.check_img.value);
-				}
-				alert(image_type.check_img.value);
+					
+				}				
 
 				$('.result-message').html(resultMessage);
 				for (let i = 0; i < maxPredictions; i++) {
