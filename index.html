@@ -46,12 +46,7 @@
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">반려동물지식</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-							>Disabled</a
-						>
-					</li>
+					</li>					
 				</ul>
 			</div>
 		</nav>
@@ -67,11 +62,23 @@
 		<form name="image_type">
 			<!-- form을 통해 데이터를 주고 받을 수 있음-->
 			<div class="d-flex justify-content-center">
-				<input type="radio" name="check_img" value="귀" />귀&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="check_img" value="토" />토&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="check_img" value="변" />변&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="check_img" value="피부" />피부&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="check_img" value="눈" />눈&nbsp;&nbsp;&nbsp;
+				<label class="box-radio-input"
+					><input type="radio" name="check_img" value="귀" checked="checked" /><span
+						>귀</span
+					></label
+				>&nbsp;&nbsp;&nbsp;
+				<label class="box-radio-input"
+					><input type="radio" name="check_img" value="토" /><span>토</span></label
+				>&nbsp;&nbsp;&nbsp;
+				<label class="box-radio-input"
+					><input type="radio" name="check_img" value="변" /><span>변</span></label
+				>&nbsp;&nbsp;&nbsp;
+				<label class="box-radio-input"
+					><input type="radio" name="check_img" value="피부" /><span>피부</span></label
+				>&nbsp;&nbsp;&nbsp;
+				<label class="box-radio-input"
+					><input type="radio" name="check_img" value="눈" /><span>눈</span></label
+				>&nbsp;&nbsp;&nbsp;				
 			</div>
 		</form>
 
@@ -228,7 +235,7 @@
 					} else {
 						resultMessage = '알수없음';
 					}
-					resultMessage = resultMessage + ''
+					resultMessage = resultMessage + '';
 				} else if (image_type.check_img.value == '토') {
 					if (prediction[0].className == '갈색&검정색 토') {
 						resultMessage = '갈색&검정색 토일 확률이 높습니다.';
@@ -276,8 +283,7 @@
 					} else {
 						resultMessage = '알수없음';
 					}
-					
-				}				
+				}
 
 				$('.result-message').html(resultMessage);
 				for (let i = 0; i < maxPredictions; i++) {
