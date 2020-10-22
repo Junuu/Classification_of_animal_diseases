@@ -1,0 +1,4 @@
+User-Agent:*
+Allow: /
+
+Sitemap: https://aidoctorpet.site/sitemap.xml
